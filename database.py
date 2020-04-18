@@ -2,6 +2,7 @@ import sqlite3
 
 conn = sqlite3.connect('user.db')
 
+
 class Not_Found_Exception(Exception):
     pass
 
@@ -13,7 +14,18 @@ def exec_sql_fetchone(sql):
     if result is None:
         raise Not_Found_Exception()
     c.close()
+    conn.commit()
     return result
+
+
+def exec_sql(sql):
+    c = conn.cursor()
+    c.execute(sql)
+    last_row = c.lastrowid
+    c.close()
+    conn.commit()
+
+    return last_row
 
 
 class User(object):
@@ -24,6 +36,38 @@ class User(object):
         self.user_name = ""
         self.email = ""
         self.pass_hash = ""
+
+    def save_to_db(self):
+        if self._check_if_exists_user_name():
+            self._update()
+        else:
+            self._new_commit()
+
+
+    def _check_if_exists_user_name(self):
+        sql = "SELECT Count(*) FROM User WHERE user_name=\"{}\"".format(self.user_name)
+        return exec_sql_fetchone(sql)[0] == 1
+
+    def _update(self):
+        sql = "UPDATE User SET " \
+              "first_name=\"{}\", " \
+              "last_name=\"{}\", " \
+              "user_name=\"{}\", " \
+              "email=\"{}\", " \
+              "pass_hash=\"{}\" " \
+              "WHERE ID={}".format(self.first_name, self.last_name, self.user_name, self.email, self.pass_hash, self.id)
+        exec_sql(sql)
+
+    def _new_commit(self):
+        sql = "INSERT INTO User VALUES (NULL, \"{}\",\"{}\",\"{}\",\"{}\",\"{}\")".format(
+            self.first_name,
+            self.last_name,
+            self.user_name,
+            self.email,
+            self.pass_hash
+        )
+
+        self.id = exec_sql(sql)
 
     @staticmethod
     def _copy_result_to_user(result):
