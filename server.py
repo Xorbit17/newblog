@@ -45,6 +45,18 @@ class LoginHandler(web.RequestHandler):
             self.set_cookie("user_id", str(check_user.id))
             self.redirect("/home.html")
             return
+class NewUserHandler(web.RequestHandler):
+
+    def post(self):
+        first_name = self.get_body_argument("first-name")
+        last_name = self.get_body_argument("last-name")
+        email = self.get_body_argument("email")
+        user_name = self.get_body_argument("user-name")
+        password = self.get_body_argument("password")
+        hasher = hashlib.sha256()
+        hasher.update(password.encode("utf-8"))
+        # Add illegal char check?
+        hashed = hasher.hexdigest()
 
 
 def make_tornado_app():
