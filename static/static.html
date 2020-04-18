@@ -3,12 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <title>Static page</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/css/bootstrap-grid.min.css"/>
     <link rel="stylesheet" href="/static/style.css"/>
 
 </head>
 <body>
-<h1>Dit is een titel</h1>
-<p>Bodybodybody</p>
+<section id="header">
+    <!-- Copied from getbootstrap-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login">Login</a>
+                </li>
+
+            </ul>
+
+        </div>
+    </nav>
+
+    <!--My stupig HTML-->
+    <div class="container-fluid">
+        <div class="pattern-bar">
+            <h1>Blog title</h1>
+        </div>
+    </div>
+
+</section>
+<section id="content">
+    <div class="container">
+        <div class="mb-auto">
+            <div class="row">
+                <div class="jumbotron w-100">
+                    <h1>Content title</h1>
+                    <p>Some nice text</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+
+                Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra,
+                est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod
+                gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor. Ut
+                ullamcorper, ligula eu tempor congue, eros est euismod turpis, id tincidunt sapien risus a quam.
+                Maecenas fermentum consequat mi. Donec fermentum. Pellentesque malesuada nulla a mi. Duis sapien sem,
+                aliquet nec, commodo eget, consequat quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl
+                adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu.
+                Aliquam consequat. Curabitur augue lorem, dapibus quis, laoreet et, pretium ac, nisi. Aenean magna nisl,
+                mollis quis, molestie eu, feugiat in, orci. In hac habitasse platea dictumst.</p>
+        </div>
+    </div>
+</section>
+<section id="footer">
+
+</section>
+
+<script src="/static/js/jquery-3.4.1.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
 </body>
 </html>

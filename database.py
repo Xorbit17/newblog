@@ -2,11 +2,16 @@ import sqlite3
 
 conn = sqlite3.connect('user.db')
 
+class Not_Found_Exception(Exception):
+    pass
+
 
 def exec_sql_fetchone(sql):
     c = conn.cursor()
     c.execute(sql)
     result = c.fetchone()
+    if result is None:
+        raise Not_Found_Exception()
     c.close()
     return result
 
@@ -44,7 +49,7 @@ class User(object):
 
     @staticmethod
     def get_by_user_name(user_name):
-        result = exec_sql_fetchone("SELECT * FROM User WHERE user_name={}".format(user_name))
+        result = exec_sql_fetchone("SELECT * FROM User WHERE user_name=\"{}\"".format(user_name))
         return User._copy_result_to_user(result)
 
 

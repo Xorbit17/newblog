@@ -1,9 +1,14 @@
-body {
-    font-family: sans-serif;
+.pattern-bar {
+    background-image: url("/static/assets/images/pattern.jpg");
+    background-repeat: repeat-x;
+    min-height:10em;
 
 }
 
-h1 {
-    color:red;
+.pattern-bar > h1 {
+    color:white;
+    margin:2em;
+    font-size:2em;
+
 }
 
