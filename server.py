@@ -30,7 +30,7 @@ class LoginHandler(web.RequestHandler):
         try:
             check_user = database.User.get_by_user_name(user_name)
         except database.Not_Found_Exception:
-            self.redirect("/static/usernotfound.html")
+            self.redirect("/static/usernotfound.html") #html file aangemaakt maar moet nog uitbreiden
             return
 
         # Check if pass hash matches
@@ -41,9 +41,9 @@ class LoginHandler(web.RequestHandler):
 
             self.redirect("/home.html")
         else:
-            #self.redirect("/static/password-not-correct.html")
+            self.redirect("/static/password-not-correct.html") #snel een html file aangemaakt!
             self.set_cookie("user_id", str(check_user.id))
-            self.redirect("/home.html")
+            self.redirect("/home.html") #home.html of static.html????
             return
 
 class NewUserHandler(web.RequestHandler):
