@@ -1,5 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends main.html %}
+
+{% block nav %}
+{% include nav.html %}
+{% end %}
+
+{% block image %}
+{% include image.html %}
+{% end %}
+
+{% block footer %}
+{% include footer.html %}
+{% end %}
+
+{% block content %}
+
+
 <head>
     <meta charset="UTF-8">
     <title>Static page</title>
@@ -44,3 +59,5 @@
 <script src="/static/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+{% end %}

@@ -7,6 +7,7 @@ import re
 
 CURRENT_PATH = os.path.dirname(os.path.realpath(__file__))
 STATIC_FILE_DIR = os.path.join(CURRENT_PATH, "static")
+TEMPLATE = os.path.join(CURRENT_PATH, "templates") #nog eens opzoeken!!!
 
 USER_REGEX = r"^(?=.{2,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$"
 PASS_REGEX = r"^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$"
@@ -19,9 +20,10 @@ class MainHandler(web.RequestHandler):
     """This wil process templates"""
 
     def get(self, arg1):
-        # user = database.get_user_by_id(user_id)
-        self.write("Het werkt: {}. Met user. {}".format(arg1, self.cookies.get("user_id")))
-
+        self.render("static.html", title= "Homepage")
+        #user = database.get_user_by_id(user_id)
+        #self.write("Het werkt: {}. Met user. {}".format(arg1, self.cookies.get("user_id")))
+        #er klopt hier iets niet!
 
 class LoginHandler(web.RequestHandler):
     """Handles login form request with a body"""
@@ -53,13 +55,13 @@ class LoginHandler(web.RequestHandler):
 
         if check_user.pass_hash == hashed:
             self.set_cookie("user_id", str(check_user.id))
-            self.redirect("/home.html")
+            self.redirect("/static/home.html")
         else:
             # self.redirect("/static/password-not-correct.html")
             # self.redirect("/static/login.html?err=pass%20not%20correct") #snel een html file aangemaakt!
 
             self.set_cookie("user_id", str(check_user.id))
-            self.redirect("/home.html")  # home.html of static.html????
+            self.redirect("/static/home.html")
             return
 
 
