@@ -5,6 +5,8 @@ import hashlib
 import database  # Hier wordt code uitgevoerd!!
 import re
 
+import model
+
 CURRENT_PATH = os.path.dirname(os.path.realpath(__file__))
 STATIC_FILE_DIR = os.path.join(CURRENT_PATH, "static")
 
@@ -21,6 +23,9 @@ class MainHandler(web.RequestHandler):
     def get(self, arg1):
         # user = database.get_user_by_id(user_id)
         self.write("Het werkt: {}. Met user. {}".format(arg1, self.cookies.get("user_id")))
+
+        dennis = model.User()
+        dennis.user_name = "dve"
 
 
 class LoginHandler(web.RequestHandler):
