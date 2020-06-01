@@ -1,13 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Static page</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/static/css/bootstrap-grid.min.css"/>
-    <link rel="stylesheet" href="/static/style.css"/>
+{% extends main.html %}
 
-</head>
+{% block nav %}
+{% include nav.html %}
+{% end %}
+
+{% block image %}
+{% include image.html %}
+{% end %}
+
+{% block footer %}
+{% include footer.html %}
+{% end %}
+
+{% block content %}
+
 <body>
 <div class="container">
     <div>
@@ -64,3 +70,5 @@
 </script>
 </body>
 </html>
+
+{% end %}
