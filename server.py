@@ -1,3 +1,5 @@
+from abc import ABC
+
 import tornado.web as web
 import tornado.ioloop as ioloop
 import os
@@ -5,10 +7,10 @@ import hashlib
 import database  # Hier wordt code uitgevoerd!!
 import re
 
-import model
 
 CURRENT_PATH = os.path.dirname(os.path.realpath(__file__))
 STATIC_FILE_DIR = os.path.join(CURRENT_PATH, "static")
+TEMPLATES_PATH = "C:\\Users\\Djamilla\\PycharmProjects\\newblog\\templates\\"
 
 USER_REGEX = r"^(?=.{2,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$"
 PASS_REGEX = r"^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$"
@@ -18,14 +20,15 @@ pass_regex_compiled = re.compile(PASS_REGEX)
 
 
 class MainHandler(web.RequestHandler):
-    """This wil process templates"""
-
-    def get(self, arg1):
+    """This will process templates"""
+    def get(self):
+        self.get_template_path("home.html")
+        self.render("home.html", title="Homepage")
         # user = database.get_user_by_id(user_id)
-        self.write("Het werkt: {}. Met user. {}".format(arg1, self.cookies.get("user_id")))
+        # self.write("Het werkt: {}. Met user. {}".format(arg1, self.cookies.get("user_id")))
 
-        dennis = model.User()
-        dennis.user_name = "dve"
+        # dennis = model.User()
+        # dennis.user_name = "dve"
 
 
 class LoginHandler(web.RequestHandler):
@@ -96,7 +99,7 @@ def make_tornado_app():
     return web.Application([
         (r"/login-action", LoginHandler),
         (r"/static/(.*)", web.StaticFileHandler, {"path": STATIC_FILE_DIR}),
-        (r"/(.*)", MainHandler)
+        (r"/(.*)", MainHandler),
     ])
 
 
