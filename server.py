@@ -7,6 +7,7 @@ import re
 
 import model
 import util
+import blog_types
 
 CURRENT_PATH = os.path.dirname(os.path.realpath(__file__))
 STATIC_FILE_DIR = os.path.join(CURRENT_PATH, "static")
@@ -25,14 +26,17 @@ class MainHandler(web.RequestHandler):
     """This wil process templates"""
 
     def get(self, arg1):
-        # self.render("home.html", title="Homepage")
         if arg1 == "":
             arg1 = "home.html"
-        self.render(arg1, title="Homepage")
-        # user = database.get_user_by_id(user_id)
-        # self.write("Het werkt: {}. Met user. {}".format(arg1, self.cookies.get("user_id")))
-        # er klopt hier iets niet!
 
+        user_id = self.get_cookie("user_id")
+        if user_id is None:
+            self.render(arg1, title="Homepage", logged_in=False, user_name="", administrator=False)
+            return
+
+        session = db.get_session()
+        user = session.query(model.User).filter_by(id=int(user_id)).first()
+        self.render(arg1, title="Homepage", logged_in=True, user_name=user.user_name, administrator=user.role==blog_types.Role.ADMIN)
 
 class LoginHandler(web.RequestHandler):
     """Handles login form request with a body"""
@@ -73,33 +77,38 @@ class LoginHandler(web.RequestHandler):
             self.redirect("login.html?err=pass%20not%20correct")
             return
 
-
-"""
-class NewUserHandler(web.RequestHandler):
+class RegisterHandler(web.RequestHandler):
     def post(self):
         first_name = self.get_body_argument("first-name")
         last_name = self.get_body_argument("last-name")
         email = self.get_body_argument("email")
         user_name = self.get_body_argument("user-name")
         password = self.get_body_argument("password")
-        hasher = hashlib.sha256()
-        hasher.update(password.encode("utf-8"))
-        # Add illegal char check?
-        hashed = hasher.hexdigest()
-        new_user = database.User()
+        hash = util.plaintext_to_hash(password)
+        new_user = model.User()
         new_user.first_name = first_name
-        new_user.last_name_name = last_name
+        new_user.last_name = last_name
         new_user.email = email
-        new_user.password = hashed
+        new_user.password = hash
         new_user.user_name = user_name
-        new_user.save_to_db()
-        self.redirect("/templates/login.html")
-"""
+        session = db.get_session()
+        session.add(new_user)
+        session.commit()
+        session.flush()
+        self.set_cookie("user_id", str(new_user.id))
+        self.redirect("/home.html")
+
+class LogoutHandler(web.RequestHandler):
+    def get(self):
+        self.clear_cookie("user_id")
+        self.redirect("/home.html")
 
 
 def make_tornado_app():
     return web.Application([
         (r"/login-action", LoginHandler),
+        (r"/logout-action", LogoutHandler),
+        (r"/register-action", RegisterHandler),
         (r"/static/(.*)", web.StaticFileHandler, {"path": STATIC_FILE_DIR}),
         (r"/(.*)", MainHandler)
     ], template_path=TEMPLATE)

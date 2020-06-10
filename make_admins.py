@@ -17,7 +17,7 @@ new_dennis = model.User(first_name="Dennis",
 new_djamilla = model.User(first_name="Djamilla",
                           last_name="Simoens",
                           user_name="dj",
-                          email="djamill.simoens@gmail.com",
+                          email="djamilla.simoens@gmail.com",
                           pass_hash=util.plaintext_to_hash("Wh@ev3r-Pasw00rd!"),
                           role=blog_types.Role.ADMIN)
 

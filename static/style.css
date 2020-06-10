@@ -1,4 +1,4 @@
-.pattern-bar {
+.jumbotron {
     background-image: url("/static/assets/images/pattern.jpg");
     background-repeat: repeat-x;
     min-height:10em;
@@ -11,4 +11,3 @@
     font-size:2em;
 
 }
-
